@@ -10,6 +10,13 @@ var cookieParser = require('cookie-parser');
 
 const errorHandler =require('./middleware/error');
 
+mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology:true,
+    useCreateIndex:true,
+    useFindAndModify:false
+}).then(() => console.log("DB Connectd"))
+.catch((err) => console.log(err));
 //import routes
 const authRoutes = require('./routes/authRoutes');
 
