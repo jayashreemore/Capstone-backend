@@ -7,8 +7,8 @@ require("dotenv").config();
 var cors = require('cors');
 var cookieParser = require('cookie-parser');
 
-const errorHandler = require('./middleware/error');
 
+const errorHandler =require('./middleware/error');
 
 //import routes
 const authRoutes = require('./routes/authRoutes');
@@ -24,15 +24,17 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 
+// /ROUTES MIDDLEWARE
+app.use('/api', authRoutes);
 
 //error middleware
 app.use(errorHandler);
 
+
 // //port
 const port = process.env.PORT || 5050
 
-//ROUTES MIDDLEWARE
-app.use('/api', authRoutes);
+
 
 app.listen(port, () => {
     console.log(` Server is running on port ${port}`);
