@@ -4,54 +4,50 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-var cors = require('cors');
-var cookieParser = require('cookie-parser');
+var cors = require("cors");
+var cookieParser = require("cookie-parser");
 
+const errorHandler = require("./middleware/error");
 
-const errorHandler =require('./middleware/error');
-
-
-
-//import routes
-
-const authRoutes = require('./routes/authRoutes');
-
-// database connnection 
-
-mongoose.connect(process.env.MONGO_URI, {
+//imports routes
+const authRoutes = require("./routes/authRoutes");
+const postRoute = require("./routes/postRoute");
+const subscriptionRoutes = require("./routes/subscriptionRoutes");
+//database connection
+mongoose
+  .connect(process.env.DATABASE, {
     useNewUrlParser: true,
-    useUnifiedTopology:true,
-    useCreateIndex:true,
-    useFindAndModify:false
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("DB connected"))
+  .catch((err) => console.log(err));
 
-})
-
-.then(() => console.log("DB Connected"))
-.catch((err) => console.log(err));
-
-
-//MIDDLEWARE
-app.use(morgan('dev'));
+//Middleware
+app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "5mb" }));
-app.use(bodyParser.urlencoded({
+app.use(
+  bodyParser.urlencoded({
     limit: "5mb",
-    extended: true
-}));
+    extended: true,
+  })
+);
 app.use(cookieParser());
 app.use(cors());
 
-// /ROUTES MIDDLEWARE
-app.use('/api', authRoutes);
+//routes middleware
+app.use("/api", authRoutes);
+app.use("/api", postRoute);
+app.use("/api", subscriptionRoutes);
 
 //error middleware
 app.use(errorHandler);
 
+//PORT
 
-// //port
-const port = process.env.PORT || 5050
-
-
+const port = process.env.PORT || 9000;
 
 app.listen(port, () => {
-    console.log(` Server is running on port ${port}`);
-})
+  console.log(`Server is running on port ${port}`);
+});

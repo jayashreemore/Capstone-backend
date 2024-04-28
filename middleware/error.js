@@ -1,15 +1,15 @@
-const ErrorResponse = require('../utils/errorResponse');
+const ErrorResponse = require('../utils/errorResponse')
 
 const errorHandler = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
 
     if (err.name === "CastError") {
-        const message = `Ressource not found ${err.value}`;
+        const message = `Resource not fount ${err.value}`;
         error = new ErrorResponse(message, 404);
     }
 
-    //Mongoose duplicate value
+    //Mongoose Duplicate value
     if (err.code === 11000) {
         const message = "Duplicate field value entered";
         error = new ErrorResponse(message, 400);
@@ -23,7 +23,7 @@ const errorHandler = (err, req, res, next) => {
 
     res.status(error.codeStatus || 500).json({
         success: false,
-        error: error.message || "server error"
+        error: error.message || "Server error"
     })
 
 }
