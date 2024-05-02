@@ -13,6 +13,7 @@ const errorHandler = require("./middleware/error");
 const authRoutes = require("./routes/authRoutes");
 const postRoute = require("./routes/postRoute");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
+const contactusRoutes = require("./routes/contactusRoutes");
 //database connection
 mongoose
   .connect(process.env.DATABASE, {
@@ -23,6 +24,15 @@ mongoose
   })
   .then(() => console.log("DB connected"))
   .catch((err) => console.log(err));
+
+
+  // New MongoDB connection string format
+const uri = 'mongodb+srv://admin:Mangodb1234@ac-dc6ar8a-shard-00-00.tzfgrgx.mongodb.net:27017,ac-dc6ar8a-shard-00-01.tzfgrgx.mongodb.net:27017,ac-dc6ar8a-shard-00-02.tzfgrgx.mongodb.net:27017/blogger?authSource=admin&replicaSet=atlas-7gogxm-shard-0&ssl=true';
+
+// Connect to MongoDB
+//mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  //.then(() => console.log('DB connected'))
+  //.catch(err => console.error('Error connecting to DB:', err));
 
 //Middleware
 app.use(morgan("dev"));
@@ -40,7 +50,7 @@ app.use(cors());
 app.use("/api", authRoutes);
 app.use("/api", postRoute);
 app.use("/api", subscriptionRoutes);
-
+app.use("/api", contactusRoutes);
 //error middleware
 app.use(errorHandler);
 

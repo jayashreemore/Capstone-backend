@@ -4,7 +4,8 @@ const ErrorResponse = require("../utils/errorResponse");
 
 //Create post
 exports.createPost = async (req, res, next) => {
-    const { title, content, postedBy, image, likes, comments } = req.body;
+    const { title, prince, princess, content, postedBy, image, likes, comments } =
+        req.body;
 
     try {
         //upload image in cloudinary
@@ -15,6 +16,8 @@ exports.createPost = async (req, res, next) => {
         });
         const post = await Post.create({
             title,
+            prince,
+            princess,
             content,
             postedBy: req.user._id,
             image: {
@@ -77,7 +80,7 @@ exports.deletePost = async (req, res, next) => {
         const posts = await Post.findByIdAndRemove(req.params.id);
         res.status(200).json({
             success: true,
-            message: "Post Deleted successfully.",
+            message: "Movie Deleted successfully.",
         });
     } catch (error) {
         next(error);
@@ -87,12 +90,14 @@ exports.deletePost = async (req, res, next) => {
 //update post
 exports.updatePost = async (req, res, next) => {
     try {
-        const { title, content, image } = req.body;
+        const { title, prince, princess, content, image } = req.body;
         const currentPost = await Post.findById(req.params.id);
 
         //build the object data
         const data = {
             title: title || currentPost.title,
+            prince: prince || currentPost.prince,
+            princess: princess || currentPost.princess,
             content: content || currentPost.content,
             image: image || currentPost.image,
         };

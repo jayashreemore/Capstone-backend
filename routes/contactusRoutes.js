@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
-const { subscription } = require("../controllers/subscriptionController");
+const { contactus } = require("../controllers/contactusController");
 
 //auth routes
 // /api/signup
-router.post("/subscription", subscription);
+router.post("/contactus", contactus);
 
 module.exports = router;

@@ -5,11 +5,19 @@ const postSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            required: [true, "title is required"],
+            required: [true, "Movie name is required"],
+        },
+        prince: {
+            type: String,
+            required: [true, "Prince name is required"],
+        },
+        princess: {
+            type: String,
+            required: [true, "princess is required"],
         },
         content: {
             type: String,
-            required: [true, "content is required"],
+            required: [true, "Movie story description is required"],
         },
         postedBy: {
             type: ObjectId,
